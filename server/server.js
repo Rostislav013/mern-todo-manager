@@ -3,8 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const PORT = 3001;
-
+const PORT = process.env.PORT || 3001;
+require('dotenv').config();
 let Todo = require('./models/todo.model'); // Important line 27, 38 for ex
 const todoRoutes = express.Router();
 
@@ -14,7 +14,7 @@ app.use(bodyParser.json()); // DIDNT WORK
 app.use(bodyParser.urlencoded({extended: false})); //ALL STARTED TO WORK AFTER THAT
 //app.use(express.bodyParser());  NOT IN USE ANYMORE
 
-mongoose.connect('mongodb+srv://someuser:13051991@productstutorial-p9ytu.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
